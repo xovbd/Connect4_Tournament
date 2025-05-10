@@ -17,12 +17,12 @@ auch verschiedene Starthilfen zur Verfügung stellen.
 ## Aufgabe
 
 Es ist ein **Bot** zu entwickeln, der nach den **Standardregeln** das Spiel "4 Gewinnt" spielt. Hierfür haben wir eine
-Schnittstelle in den jeweiligen Clients (Java oder Python) bereit gestellt, welche implementiert werden muss. Das Ziel
+Schnittstelle in den jeweiligen Clients (Java, Python oder Go) bereit gestellt, welche implementiert werden muss. Das Ziel
 ist es eine gewisse Anzahl an Spiele gegen eine Gegner KI zu gewinnen und als Turniersieger hervorzugehen! :)
 
 ## Teilnahmebedingungen
 
-- Implementierung der vorgegebenen Bot Schnittstelle (Java oder Python)
+- Implementierung der vorgegebenen Bot Schnittstelle (Java, Python oder Go)
 - Der Bot sendet dem Spiel vor dem Timeout (ca 2 Sekunden), was der nächste Zug ist
 - Die KI ist selbst geschrieben
 
@@ -31,6 +31,7 @@ ist es eine gewisse Anzahl an Spiele gegen eine Gegner KI zu gewinnen und als Tu
 - Python 3.10.4+ (für den Spieleserver und gegebenfalls für den Bot)
 - Java SDK 17+  (falls der Bot in Java geschrieben wird)
 - dotnet 8.0 (falls der Bot in csharp geschrieben wird)
+- Go 1.23.5+ (falls der Bot in Go geschrieben wird)
 
 ## Den Spieleserver starten
 
@@ -137,6 +138,21 @@ Port       | -p or --port   | Port des 4 Connect Servers auf dem Zielserver | 87
 Wenn ihr also mehrere Bots geschrieben habt, könnt ihr mit dem Namen das ganze umschalten. 
 Es ist aber natürlich auch ausreichend den Default zu belassen und alles im "UserBot" zu machen.
 
+## Einen Client mit dem Server verbinden (Go)
+
+Den Go Client starten
+```bash
+cd goClient
+go run cmd/main.go
+```
+| Parmeter | Switch | Beschreibung                                  | Default |
+| -------- | -------| --------------------------------------------- | --------|
+|BotName   | -bot   | Name der KI, die gestartet werden soll        | MyBot   |
+|Port      | -port  | Port des 4 Connect Servers auf dem Zielserver | 8765    |
+
+Wenn ihr also mehrere Bots geschrieben habt, könnt ihr mit dem Namen das ganze umschalten. 
+Es ist aber natürlich auch ausreichend den Default zu belassen und alles im "MyBot" zu machen.
+
 ## Einen Client mit dem Server verbinden (Manueller Client)
 
 Um gegen deine eigene KI spielen zu können, kannst du einen manuellen Client starten.
@@ -218,6 +234,26 @@ public int Play(int[][] field)
 
 Der Returnwert der Play Methode ist ein Integer innerhalb von 0-5 (mögliche Spalten im Spielfeld)
 
+
+### Go
+
+Unter dem Pfad `goClient/internal/bot` findest du die Datei `mybot.go`.
+Diese Klasse beinhaltet die User-KI und die folgende Funktion `Run()`:
+
+```go
+func (b *MyBot) Run(state *model.StateData) int {
+
+	//
+	// Implement your logic here so that the bot can play
+	//
+
+	// Currently, the first column is always selected as the next move
+	return 0
+}
+```
+
+Der Returnwert der `Run()`-Funktion ist ein Integer innerhalb von 0-5 (mögliche
+Spalten im Spielfeld).
 
 
 ## Spielfeld Daten
